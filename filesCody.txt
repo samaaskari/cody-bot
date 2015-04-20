@@ -1,0 +1,5 @@
+RAWDATA/CODY/simplecontrol.top			# default bot control
+
+RAWDATA/CODY/codybot.top 		      	# Cody bot data	
+
+RAWDATA/QUIBBLE/			            	# quibble ability
