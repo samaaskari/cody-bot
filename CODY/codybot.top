@@ -1,59 +1,60 @@
 topic: ~INTRODUCTIONS (~emogoodbye ~emohello ~emohowzit name here )
 #!x matches every time on startup of a new conversation
-t: ( %input<%userfirstline )
-	^keep()   
-	Hello, I'm Cody!
+t: ( %input<%userfirstline ) 
+    ^keep()   
+    Hello, I'm Cody!
 
 #!x issued only once, then erased
 t: I am a chat bot designed to assist you in becoming a more efficient UNIX System Administrator. A Personal Computer Assistant, if you will.
 
-#!x will match on every return start of a conversation
-t: ( %input<%userfirstline %input>0 )
-	^keep()  
-	[Welcome back] [Hello, again.][Glad you came back.][Hi.][Hi, again.]
+#!x will match on every return start of a conversation 
+t: ( %input<%userfirstline %input>0 ) 
+    ^keep()  
+    [Welcome back] [Hello, again.][Glad you came back.][Hi.][Hi, again.]
 
-#! what is your name
+#! what is your name 
 u: ( what is your name ) My name is Cody.
 
 
 
 t: ^keep() ^repeat() What can I help you with?
 
-	#! Install a package
-	a: ( [ install package ] ) Install a package using the command: yum install <package name>
+    #! Install a package
+    a: ( [ install package ] ) ^repeat() Install a package using the command: yum install <package name>
     
-	#! File
-	a: ( file ) ^repeat() Would you like to create, edit, rename, move, or delete a file?
-    b: ( [ create make write touch ] ) The command to make a new file is <text editor name><new file name>. For example: vim newfile.sh
-    b: ( [ edit add_to change append ] ) The command to edit an existing file is <text editor name><existing file name>. For example: vim myfile.sh
-    b: ( [ rename ] ) The command to rename a file is mv <old file name> <new file name>. For example: mv draft.sh finalcopy.sh
-    b: ( [ move relocate ] ) The command to move a file is mv <old file path/file name> <new file path><file name>. For example: mv /home/javier/file /home/documents/file
-    b: ( [ delete remove trash ] ) The command to delete a file is rm <file name>
+    #! File
+    a: ( file ) ^repeat() What would you like to do? (create, edit, rename, move, or delete?)
+	b: ( [ create make write touch ] ) The command to make a new file is <text editor name><new file name>. For example: vim newfile.sh
+	b: ( [ edit add_to change append ] ) The command to edit an existing file is <text editor name><existing file name>. For example: vim myfile.sh
+	b: ( [ rename ] ) The command to rename a file is mv <old file name> <new file name>. For example: mv draft.sh finalcopy.sh
+	b: ( [ move relocate ] ) The command to move a file is mv <old file path/file name> <new file path><file name>. For example: mv /home/javier/file /home/documents/file
+	b: ( [ delete remove trash ] ) The command to delete a file is rm <file name>
 
-	#! Directory
-	a: ( [directory folder] ) ^repeat() Would you like to create, rename, move, delete, or change permissions of a directory?
-    b: ( [ create make ] ) The command to make a new directory is mkdir <directory name>
-    b: ( [ rename ] ) The command to rename a directory is mv <old directory name> <new directory name>. For example: mv Class_Stuff CTS4348
-    b: ( [ move relocate ] ) The command to move a file is mv <old file path> <new file path>. For example: mv /home/melissa/Desktop /home/melissa/Documents/CTS4348
-    b: ( [ delete remove trash ] ) The command to delete a directroy is rmdir <directory name>.
-    b: ( [change edit] permissions ) The command is chmod <permission number> <directory name>
+    #! Directory
+    a: ( [directory folder] ) ^repeat() What would you like to do? (navigate, create, rename, move, delete, or change permissions?)
+	b: ( navigate ) To navigate to a directory, enter cd </path/to/directory>. For example: cd /home/Sama/Desktop
+	b: ( [ create make ] ) The command to make a new directory is mkdir <directory name>
+	b: ( [ rename ] ) The command to rename a directory is mv <old directory name> <new directory name>. For example: mv Class_Stuff CTS4348
+	b: ( [ move relocate ] ) The command to move a file is mv <old file path> <new file path>. For example: mv /home/melissa/Desktop /home/melissa/Documents/CTS4348
+	b: ( [ delete remove trash ] ) The command to delete a directroy is rmdir <directory name>.
+	b: ( [change edit] permissions ) The command is chmod <permission number> <directory name>
 
-	#! System information
-	a: ( [ system UNIX linux OS operating_system ] [ version information info ] ) ^system(MSINFO32)
+    #! System information
+    a: ( [ system UNIX linux OS operating_system ] [ version information info ] ) ^repeat() ^system(./sysinfo.sh) 
 
-	#! Memory
-	a: ( memory ) Memory usage, free memory, or CPU activity?
-    b: ( usage ) ^system(/proc/meminfo)
-    b: ( free ) ^system(free -m)
-    b: ( CPU ) The command for that is top
+    #! Memory
+    a: ( memory ) ^repeat() Memory usage, free memory, or CPU activity?
+	b: ( usage ) ^system(/proc/meminfo)
+	b: ( free ) ^system(free -m) 
+	b: ( CPU ) The command for that is top
 
-	#! User
-	a: ( user ) Would you like to add, delete, or change the password of a user?
-    b: ( add ) Use the command adduser <user name> to add a user.
-    b: ( delete ) User the command userdel <user name> to delete a user.
-    b: ( [ change edit ] password ) To change a password, use passwd <user name>
+    #! User
+    a: ( user ) ^repeat() Would you like to add, delete, or change the password of a user?
+	b: ( add ) Use the command adduser <user name> to add a user.
+	b: ( delete ) User the command userdel <user name> to delete a user.
+	b: ( [ change edit ] password ) To change a password, use passwd <user name>
 
-	#! Script
-	a: ( script ) Would you like to write or execute a script?
-    b: ( write ) Create a new file and name it using a .sh extention. Start with with the shebang (#!/bin/bash), write the commands you want to automate. Save using the escape key, then typing :wq!
-    b: ( execute ) To execute a script, make sure you have permission, that you're in the directory where the script is located, and enter ./<scriptname>
+    #! Script
+    a: ( script ) ^repeat() Would you like to write or execute a script?
+	b: ( write ) Create a new file and name it using a .sh extention. Start with with the shebang (#!/bin/bash), write the commands you want to automate. Save using the escape key, then typing :wq!
+	b: ( execute ) To execute a script, make sure you have permission, that you're in the directory where the script is located, and enter ./<scriptname>
